@@ -1,0 +1,87 @@
+import random
+import threading
+
+from rich.console import Console
+
+from .values import op, _SEPERATOR
+from .helpers import switch, key_press, time_to_read, limit_validation, timeout
+from .visuals import render
+
+console = Console()
+
+_Time = 0
+_Timer = None
+_SOFT_LOCK = False
+
+
+# ===================================< SMART AFK
+def smartAFK_switch():
+    if not op['ks']['stat']:
+        return
+
+    switch(op['afk'], 'stat')
+
+    render()
+
+
+def afk_reset_timer():
+    global _Time
+    global _Timer
+
+    afk = op['afk']
+    ntr = afk['.max_interactions']
+
+    afk['.max_interactions'] = 6 if ntr < 2 else ntr
+
+    interactions = random.randint(2, afk['.max_interactions'])
+
+    console.print(_SEPERATOR + f' Keys Auto AFK Sequence')
+    # perform the task
+    for i in range(interactions):
+        rand_key = random.randint(0, len(afk['.selection_string']) - 1)
+
+        key_press(afk['.selection_string'][rand_key], int(afk['.min_delay']), int(afk['.max_delay']))
+
+        timeout(int(afk['.min_delay']), int(afk['.max_delay']))
+    # reset timer if still working
+    if op['ks']['stat'] and afk['stat']:
+        limit_validation()
+
+        _Time = random.randint(int(afk['.min_waiting_time'] * 60), int(afk['.max_waiting_time'] * 60))
+
+        afk['time'] = time_to_read(_Time)
+
+        render()
+
+        _Timer = threading.Timer(_Time, afk_reset_timer)
+        _Timer.start()
+
+
+def smartAFK_prot():
+    global _Timer
+    global _SOFT_LOCK
+
+    afk = op['afk']
+
+    if not op['ks']['stat'] or not afk['stat']:
+        if _Timer and _Timer.is_alive():
+            _Timer.cancel()
+            _SOFT_LOCK = False
+
+        return
+
+    global _Time
+
+    if not _SOFT_LOCK:
+        _SOFT_LOCK = True
+
+        limit_validation()
+
+        _Time = random.randint(int(afk['.min_waiting_time'] * 60), int(afk['.max_waiting_time'] * 60))
+
+        afk['time'] = time_to_read(_Time)
+
+        render()
+
+        _Timer = threading.Timer(_Time, afk_reset_timer)
+        _Timer.start()
