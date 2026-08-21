@@ -34,7 +34,7 @@ def afk_reset_timer():
 
     afk['.max_interactions'] = 6 if ntr < 1 else ntr
 
-    interactions = random.randint(1, afk['.max_interactions'])
+    interactions = random.randint(1, ntr)
 
     console.print(_SEPERATOR + f' Keys Auto AFK Sequence')
     # perform the task
@@ -50,7 +50,7 @@ def afk_reset_timer():
     if op['ks']['stat'] and afk['stat']:
         limit_validation()
 
-        _Time = random.randint(int(op['afk']['.min_waiting_time'] * 60), int(op['afk']['.max_waiting_time'] * 60))
+        _Time = random.randint(int(afk['.min_waiting_time'] * 60), int(afk['.max_waiting_time'] * 60))
 
         afk['time'] = time_to_read(_Time)
 
