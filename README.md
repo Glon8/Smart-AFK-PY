@@ -53,7 +53,7 @@ It is recommended to use at least two keys together for important triggers to pr
 
 > **Note:** Special keys are not supported.
 
-### `[min/max]_waiting_time`
+### `.[min/max]_waiting_time`
 
 Sets the minimum and maximum waiting time between input cycles.
 
@@ -66,13 +66,13 @@ The values are specified in **minutes**. Decimal values can be used, allowing fr
 
 The actual waiting time is randomized between the configured minimum and maximum values.
 
-### `max_interactions`
+### `.max_interactions`
 
 Sets the maximum number of keys Smart-AFK may press during a cycle.
 
 The actual number of key presses is randomized and will always be at least **one**.
 
-### `selection_string`
+### `.selection_string`
 
 Defines all keys that Smart-AFK is allowed to press.
 
@@ -84,7 +84,7 @@ For example:
 
 > **Note:** Special keys are not supported.
 
-### `[min/max]_delay`
+### `.[min/max]_delay`
 
 Sets the minimum and maximum delay between individual key presses.
 
