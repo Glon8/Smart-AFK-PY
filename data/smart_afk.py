@@ -4,7 +4,7 @@ import threading
 from rich.console import Console
 
 from .values import op, _SEPERATOR
-from .helpers import switch, key_press, time_to_read, limit_validation, timeout
+from .helpers import switch, key_press, time_to_read, limit_validation, timeout,disturbance
 from .visuals import render
 
 console = Console()
@@ -21,8 +21,8 @@ def smartAFK_switch():
 
     switch(op['afk'], 'stat')
 
-    render()
-
+    if not op['afk']['stat']:
+        render()
 
 def afk_reset_timer():
     global _Time
@@ -31,23 +31,25 @@ def afk_reset_timer():
     afk = op['afk']
     ntr = afk['.max_interactions']
 
-    afk['.max_interactions'] = 6 if ntr < 2 else ntr
+    afk['.max_interactions'] = 6 if ntr < 1 else ntr
 
-    interactions = random.randint(2, afk['.max_interactions'])
+    interactions = random.randint(1, op['afk']['.max_interactions'])
 
     console.print(_SEPERATOR + f' Keys Auto AFK Sequence')
     # perform the task
     for i in range(interactions):
-        rand_key = random.randint(0, len(afk['.selection_string']) - 1)
+        rand_key = random.randint(0, len(op['afk']['.selection_string']) - 1)
 
-        key_press(afk['.selection_string'][rand_key], int(afk['.min_delay']), int(afk['.max_delay']))
+        key_press(afk['.selection_string'][rand_key],
+                  int(op['afk']['.min_delay'] + disturbance()),
+                  int(op['afk']['.max_delay'] + disturbance()))
 
-        timeout(int(afk['.min_delay']), int(afk['.max_delay']))
+        timeout(int(op['afk']['.min_delay'] + disturbance()), int(op['afk']['.max_delay'] + disturbance()))
     # reset timer if still working
     if op['ks']['stat'] and afk['stat']:
         limit_validation()
 
-        _Time = random.randint(int(afk['.min_waiting_time'] * 60), int(afk['.max_waiting_time'] * 60))
+        _Time = random.randint(int(op['afk']['.min_waiting_time'] * 60), int(op['afk']['.max_waiting_time'] * 60))
 
         afk['time'] = time_to_read(_Time)
 
@@ -77,7 +79,7 @@ def smartAFK_prot():
 
         limit_validation()
 
-        _Time = random.randint(int(afk['.min_waiting_time'] * 60), int(afk['.max_waiting_time'] * 60))
+        _Time = random.randint(int(op['afk']['.min_waiting_time'] * 60), int(op['afk']['.max_waiting_time'] * 60))
 
         afk['time'] = time_to_read(_Time)
 

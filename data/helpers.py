@@ -112,11 +112,12 @@ def config_parse_reread(string):
 
     valid_keys = ['display', '.positive_emoji', '.negative_emoji', 'key_trigger',
                   '.min_waiting_time','.max_waiting_time','.max_interactions','.selection_string',
-                  '.min_delay','.max_delay', 'time']
+                  '.min_delay','.max_delay', '.max_disturbance', 'time']
 
     for name, value in config_pack.items():
         for key, val in value.items():
             if key in valid_keys and op[name][key] != val and name != 'ks':
+                print(f'[{name}:{key}] {val}')
                 op[name][key] = val
 
 
@@ -163,3 +164,12 @@ def timeout(min_t, max_t):
 
     timeout = random.randint(min_t, max_t) / 1000
     time.sleep(timeout)
+
+# ===================================< DISTURBANCE (afk)
+def disturbance():
+    afk = op['afk']
+
+    if not afk['.max_disturbance'] or not isinstance(afk['.max_disturbance'], int):
+        op['afk']['.max_disturbance'] = 100
+
+    return random.randint(0, op['afk']['.max_disturbance'])

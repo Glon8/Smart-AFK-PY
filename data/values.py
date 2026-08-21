@@ -23,6 +23,7 @@ _OPERATIONS = {
         '.selection_string': 'wasd',
         '.min_delay': 178,
         '.max_delay': 300,
+        '.max_disturbance': 100,
         'time': 0,
         'stat': 0,
     },
