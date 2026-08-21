@@ -13,7 +13,7 @@ _OPERATIONS = {
         'key_trigger': 'c+0',
         'stat': 0,
     },
-    'afk':{
+    'afk': {
         'name': 'Smart AFK',
         'note': 'Remember to set Kill Switch on before use!',
         'key_trigger': 'c+2',

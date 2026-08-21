@@ -4,7 +4,7 @@ import threading
 from rich.console import Console
 
 from .values import op, _SEPERATOR
-from .helpers import switch, key_press, time_to_read, limit_validation, timeout,disturbance
+from .helpers import switch, key_press, time_to_read, limit_validation, timeout, disturbance
 from .visuals import render
 
 console = Console()
@@ -23,6 +23,7 @@ def smartAFK_switch():
 
     if not op['afk']['stat']:
         render()
+
 
 def afk_reset_timer():
     global _Time

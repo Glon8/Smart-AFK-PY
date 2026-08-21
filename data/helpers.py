@@ -111,8 +111,8 @@ def config_parse_reread(string):
         return
 
     valid_keys = ['display', '.positive_emoji', '.negative_emoji', 'key_trigger',
-                  '.min_waiting_time','.max_waiting_time','.max_interactions','.selection_string',
-                  '.min_delay','.max_delay', '.max_disturbance', 'time']
+                  '.min_waiting_time', '.max_waiting_time', '.max_interactions', '.selection_string',
+                  '.min_delay', '.max_delay', '.max_disturbance', 'time']
 
     for name, value in config_pack.items():
         for key, val in value.items():
@@ -126,12 +126,14 @@ def config_parse_reread(string):
 def unicode_convert(unicode):
     return chr(int(unicode[2:], 16))
 
+
 # ===================================< TIME TO READ (afk)
 def time_to_read(seconds):
     if not isinstance(seconds, int) and seconds < 0:
         return
 
-    return f'{int(seconds/60):02d}:{int(seconds%60):02d}'
+    return f'{int(seconds / 60):02d}:{int(seconds % 60):02d}'
+
 
 # ===================================< LIMIT VALIDATION (afk)
 def limit_validation():
@@ -154,6 +156,7 @@ def limit_validation():
         afk['.min_waiting_time'] = min_w
         afk['.max_waiting_time'] = max_w
 
+
 # ===================================< TIMEOUT (afk)
 def timeout(min_t, max_t):
     if not isinstance(min_t, int) or not isinstance(max_t, int):
@@ -164,6 +167,7 @@ def timeout(min_t, max_t):
 
     timeout = random.randint(min_t, max_t) / 1000
     time.sleep(timeout)
+
 
 # ===================================< DISTURBANCE (afk)
 def disturbance():
