@@ -117,7 +117,6 @@ def config_parse_reread(string):
     for name, value in config_pack.items():
         for key, val in value.items():
             if key in valid_keys and op[name][key] != val and name != 'ks':
-                print(f'[{name}:{key}] {val}')
                 op[name][key] = val
 
 
@@ -174,6 +173,6 @@ def disturbance():
     afk = op['afk']
 
     if not afk['.max_disturbance'] or not isinstance(afk['.max_disturbance'], int):
-        op['afk']['.max_disturbance'] = 100
+        afk['.max_disturbance'] = 100
 
-    return random.randint(0, op['afk']['.max_disturbance'])
+    return random.randint(0, afk['.max_disturbance'])
