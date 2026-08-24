@@ -15,7 +15,7 @@ _SOFT_LOCK = False
 
 
 # ===================================< SMART AFK
-def smartAFK_switch():
+def afk_switch():
     if not op['ks']['stat']:
         return
 
@@ -61,7 +61,7 @@ def afk_reset_timer():
         _Timer.start()
 
 
-def smartAFK_prot():
+def afk_prot():
     global _Timer
     global _SOFT_LOCK
 

@@ -3,7 +3,7 @@ from data.values import op
 from data.visuals import render
 from data.killswitch import ks_switch
 from data.display import display_switch
-from data.smart_afk import smartAFK_switch, smartAFK_prot
+from data.smart_afk import afk_switch, afk_prot
 
 from pynput.keyboard import Controller as K, Listener as kL, HotKey
 
@@ -14,7 +14,7 @@ k = K()
 def control_panel():
     while True:
         if op['ks']['stat']:
-            smartAFK_prot()
+            afk_prot()
 
 
 # ===================================< MAIN
@@ -25,7 +25,7 @@ def main():
     hotkeys = [
         HotKey(HotKey.parse(op['gnr']['key_display_change']), display_switch),
         HotKey(HotKey.parse(op['ks']['key_trigger']), ks_switch),
-        HotKey(HotKey.parse(op['afk']['key_trigger']), smartAFK_switch),
+        HotKey(HotKey.parse(op['afk']['key_trigger']), afk_switch),
     ]
 
     def on_press(key):
