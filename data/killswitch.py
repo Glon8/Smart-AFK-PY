@@ -7,7 +7,7 @@ from .helpers import config_parse_reread, read_file, write_file, getDir
 # ===================================< KILL SWITCH
 def ks_switch():
     ks = op['ks']
-    op['afk']['stat'] = 0
+    op['afk']['stat'] = False
 
     switch(ks, 'stat')
 

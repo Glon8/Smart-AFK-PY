@@ -17,7 +17,15 @@ k = K()
 # dic - dictionary to use
 # key - from the dictionary to flip
 def switch(dic, key):
-    dic[key] = 1 - dic[key]
+    if not dic or not isinstance(dic, dict):
+        return
+
+    item = dic.get(key)
+
+    if item is None or not isinstance(item, bool):
+        return
+
+    dic[key] = not dic[key]
 
 
 # ===================================< KEY PRESS
@@ -110,9 +118,7 @@ def config_parse_reread(string):
     if copy_op == copy_conf:
         return
 
-    valid_keys = ['display', '.positive_emoji', '.negative_emoji', 'key_trigger',
-                  '.min_waiting_time', '.max_waiting_time', '.max_interactions', '.selection_string',
-                  '.min_delay', '.max_delay', '.max_disturbance', 'time']
+    valid_keys = ['display', '.settings', 'key_trigger', 'time']
 
     for name, value in config_pack.items():
         for key, val in value.items():
@@ -137,23 +143,24 @@ def time_to_read(seconds):
 # ===================================< LIMIT VALIDATION (afk)
 def limit_validation():
     afk = op['afk']
+    sett = afk['.settings']
 
-    min_w = afk['.min_waiting_time']
-    max_w = afk['.max_waiting_time']
+    min_w = sett['.min_waiting_time']
+    max_w = sett['.max_waiting_time']
 
     if min_w < 0:
-        afk['.min_waiting_time'] = 2
-        min_w = afk['.min_waiting_time']
+        sett['.min_waiting_time'] = 2
+        min_w = sett['.min_waiting_time']
 
     if max_w < 0:
-        afk['.max_waiting_time'] = 3.5
-        max_w = afk['.max_waiting_time']
+        sett['.max_waiting_time'] = 3.5
+        max_w = sett['.max_waiting_time']
 
     if min_w > max_w:
         min_w, max_w = max_w, min_w
 
-        afk['.min_waiting_time'] = min_w
-        afk['.max_waiting_time'] = max_w
+        sett['.min_waiting_time'] = min_w
+        sett['.max_waiting_time'] = max_w
 
 
 # ===================================< TIMEOUT (afk)
@@ -169,10 +176,17 @@ def timeout(min_t, max_t):
 
 
 # ===================================< DISTURBANCE (afk)
-def disturbance():
-    afk = op['afk']
+def disturbance(host):
+    if not host or not isinstance(host, dict):
+        return
 
-    if not afk['.max_disturbance'] or not isinstance(afk['.max_disturbance'], int):
-        afk['.max_disturbance'] = 100
+    sett = host.get('.settings')
 
-    return random.randint(0, afk['.max_disturbance'])
+    if not sett:
+        print('disturbance func error: host not contain .settings')
+        return
+
+    if not isinstance(sett.get('.max_disturbance'), int):
+        sett['.max_disturbance'] = 50
+
+    return random.randint(0, sett['.max_disturbance'])

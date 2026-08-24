@@ -17,9 +17,10 @@ def render():
         os.system('clear')
 
     general = op['gnr']
+    sett = general['.settings']
 
-    pos = 'on' if general['display'] == 'plain' else unicode_convert(general[".positive_emoji"])
-    neg = 'off' if general['display'] == 'plain' else unicode_convert(general[".negative_emoji"])
+    pos = 'on' if general['display'] == 'plain' else unicode_convert(sett[".positive_emoji"])
+    neg = 'off' if general['display'] == 'plain' else unicode_convert(sett[".negative_emoji"])
 
     for key, values in op.items():
         for att, stat in values.items():
