@@ -4,8 +4,6 @@
 
 The utility includes a built-in timer that restarts the sequence after each cycle, allowing periodic keyboard input while the user is away from the PC.
 
-> **Important:** Special keys are **not supported**.
-
 ## Features
 
 * Repeatedly executes configurable keyboard input
@@ -17,6 +15,8 @@ The utility includes a built-in timer that restarts the sequence after each cycl
 * Configurable through `config.json`
 * Simple console UI
 * Optional emoji-based UI for consoles that support emojis
+* Supports special keyboard keys
+* Supports sequences of keys
 
 ## Requirements
 
@@ -51,7 +51,18 @@ Configures the keyboard bindings used by the program.
 
 It is recommended to use at least two keys together for important triggers to prevent accidental activation.
 
-> **Note:** Special keys are not supported.
+#### Special keys that are supported:
+
+```text
+tab, alt, alt_gr, shift, ctrl, cmd, 
+space, enter, esc, caps, backspace, delete, 
+insert, home, end, page_up, page_down, 
+up, down, left, right, 
+print_screen, scroll_lock, pause, menu, num_lock, 
+f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12
+```
+
+> **Note:** You can add more special keys, in `special_keys.py` file.
 
 ### `.[min/max]_waiting_time`
 
@@ -74,15 +85,25 @@ The actual number of key presses is randomized and will always be at least **one
 
 ### `.selection_string`
 
-Defines all keys that Smart-AFK is allowed to press.
+Defines all keys that Smart-AFK is allowed to press, separated by `,`.
+
+> **Note:** NO SPACE NEEDED IN BETWEEN
 
 For example:
 
 ```json
-"selection_string": "wasd"
+"selection_string": "w,a,s,d"
 ```
 
-> **Note:** Special keys are not supported.
+To add chaining, you should use `+`.
+
+For example:
+
+```json
+"selection_string": "shift+w,a,s,d"
+```
+
+> **Note:** In the example, the first key is a sequence of, `Shit` and `w`, which result in `W`.
 
 ### `.[min/max]_delay`
 

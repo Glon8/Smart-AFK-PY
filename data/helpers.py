@@ -9,6 +9,7 @@ from pathlib import Path
 from pynput.keyboard import Controller as K
 
 from .values import op
+from .special_keys import spc_dict
 
 k = K()
 
@@ -27,22 +28,76 @@ def switch(dic, key):
 
     dic[key] = not dic[key]
 
+# ===================================< KEY PRESS HELPER
+def key_press_helper(key, min_delay, max_delay):
+    k.press(key)
+
+    timeout(min_delay, max_delay)
+
+    k.release(key)
 
 # ===================================< KEY PRESS
 # key - to press
 # delay - between press and release
-def key_press(key, min_delay, max_delay):
+def key_press(key_set, min_delay, max_delay):
     if not isinstance(min_delay, int) or not isinstance(max_delay, int):
         return
 
     if min_delay > max_delay:
         min_delay, max_t = max_delay, min_delay
 
-    k.press(key)
+    key_set.strip()
 
-    timeout(min_delay, max_delay)
+    if len(key_set) == 1:
+        key_press_helper(key_set, min_delay, max_delay)
 
-    k.release(key)
+        return
+
+    spc_key = does_exists_ld(key_set.lower(), spc_dict)
+
+    if spc_key:
+        key_press_helper(spc_key['key'], min_delay, max_delay)
+
+        return
+
+    if len(key_set) > 1 and not spc_key:
+        parts = key_set.split('+')
+
+        if not isinstance(parts, list) or not parts:
+            return
+
+        for part in parts:
+            part.strip()
+
+            if len(part) == 1:
+                k.press(part)
+
+            spc_key = does_exists_ld(part.lower(), spc_dict)
+
+            if spc_key:
+                k.press(spc_key['key'])
+
+        timeout(min_delay, max_delay)
+
+        for part in reversed(parts):
+            part.strip()
+
+            if len(part) == 1:
+                k.release(part)
+
+            spc_key = does_exists_ld(part.lower(), spc_dict)
+
+            if spc_key:
+                k.release(spc_key['key'])
+
+
+# ===================================< DOES EXISTS (list > dictionary)
+def does_exists_ld(name, list):
+    for dic in list:
+        if isinstance(dic, dict) and dic['name'] == name:
+            return dic
+
+    return False
 
 
 # ===================================< FILES COUNT

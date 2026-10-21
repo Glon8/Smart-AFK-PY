@@ -25,7 +25,7 @@ _OPERATIONS = {
             '.min_waiting_time': 2,
             '.max_waiting_time': 3.5,
             '.max_interactions': 6,
-            '.selection_string': 'wasd',
+            '.selection_string': 'w,a,s,d',
             '.min_delay': 178,
             '.max_delay': 300,
             '.max_disturbance': 100,

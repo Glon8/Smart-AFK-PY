@@ -38,11 +38,13 @@ def afk_reset_timer():
     interactions = random.randint(1, sett['.max_interactions'])
 
     console.print(_SEPERATOR + f' Keys Auto AFK Sequence')
+
+    keys_list = sett['.selection_string'].split(',')
     # perform the task
     for i in range(interactions):
-        rand_key = random.randint(0, len(sett['.selection_string']) - 1)
+        rand_key = random.randint(0, len(keys_list) - 1)
 
-        key_press(sett['.selection_string'][rand_key],
+        key_press(keys_list[rand_key],
                   int(sett['.min_delay'] + disturbance(afk)),
                   int(sett['.max_delay'] + disturbance(afk)))
 
