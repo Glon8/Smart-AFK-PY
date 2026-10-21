@@ -51,18 +51,7 @@ Configures the keyboard bindings used by the program.
 
 It is recommended to use at least two keys together for important triggers to prevent accidental activation.
 
-#### Special keys that are supported:
-
-```text
-tab, alt, alt_gr, shift, ctrl, cmd, 
-space, enter, esc, caps, backspace, delete, 
-insert, home, end, page_up, page_down, 
-up, down, left, right, 
-print_screen, scroll_lock, pause, menu, num_lock, 
-f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12
-```
-
-> **Note:** You can add more special keys, in `special_keys.py` file.
+> **Note:** Special keys not supported for **TRIGGERS**.
 
 ### `.[min/max]_waiting_time`
 
@@ -104,6 +93,19 @@ For example:
 ```
 
 > **Note:** In the example, the first key is a sequence of, `Shit` and `w`, which result in `W`.
+
+#### Special keys that are supported:
+
+```text
+tab, alt, alt_gr, shift, ctrl, cmd, 
+space, enter, esc, caps, backspace, delete, 
+insert, home, end, page_up, page_down, 
+up, down, left, right, 
+print_screen, scroll_lock, pause, menu, num_lock, 
+f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12
+```
+
+> **Note:** You can add more special keys, in `special_keys.py` file.
 
 ### `.[min/max]_delay`
 
